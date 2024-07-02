@@ -1,0 +1,100 @@
+body {
+  font-family: "Press Start 2P", system-ui;
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  color: white;
+  background-color: black; /* Ensure background color is black */
+  height: 100vh; /* Make body take full viewport height */
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Take full width of the viewport */
+  height: 80px; /* Adjust height as needed */
+  z-index: 1000; /* Ensure header is above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 20px solid transparent; /* Set initial border size */
+  background-image: url('https://th.bing.com/th/id/R.c343826a3650b1b458254bcf8a0c0503?rik=NnA5hLz%2fYBmTNA&riu=http%3a%2f%2fwww.beadsprites.com%2fimages%2f398.gif&ehk=7j2rzmFLsrZUBjQx0%2fUTurOT8Io4QlX3a0%2fVTcj3Lvw%3d&risl=&pid=ImgRaw&r=0'); /* Replace with your image URL */
+  background-repeat: repeat; /* Repeat the image both horizontally and vertically */
+  background-size: auto; /* Adjust size as needed */
+  box-sizing: border-box; /* Include border in sizing calculations */
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%; /* Take full width of the container */
+  margin: 120px auto 20px; /* Adjust margin top to accommodate header height */
+  text-align: center;
+  padding: 20px;
+  background-color: black; /* Example background color for container */
+  color: white; /* Text color inside container */
+}
+
+
+.container h1 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}  
+
+.link-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  max-height: 20px;
+}
+
+.link-list li {
+  margin-right: 10px;
+}
+
+.link-list a {
+  display: block;
+  padding: 5px;
+}
+
+.image-above-page1 img {
+  max-height: 100px; /* Set maximum width */
+  width: auto; /* Maintain aspect ratio */
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.image-above-page2 img {
+  max-height: 100px; /* Set maximum width */
+  width: auto; /* Maintain aspect ratio */
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.image-above-page3 img {
+  max-height: 100px; /* Set maximum width */
+  width: auto; /* Maintain aspect ratio */
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+
+/* Apply styles to all links */
+a {
+  color: white; /* Default link color */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Apply styles to visited links */
+a:visited {
+  color: white; /* Keep the same color as default */
+}

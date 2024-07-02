@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details</title>
+    <!-- Include any CSS stylesheets here -->
+    <link rel="stylesheet" href="gameDetails.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+</head>
+
+<body>
+
+    <div id="header" class="header">
+        <a href="homepage.html" class="home-button">Home</a>
+        <h1 id="dynamicTitle">Loading Game...</h1>
+        <a href="gamesLibrary.html" class="back-button">Back</a>
+        <div class="header-content">
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Game Details</h1>
+        <div id="gameDetails">
+            <!-- Game details will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <script>
+        async function fetchGameDetails() {
+            try {
+                // Extract game ID from URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const gameId = urlParams.get('id');
+
+                const response = await fetch(`http://localhost:3000/games/${gameId}`); // Adjust URL as needed
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const gameData = await response.json();
+
+                // Log the received game data (optional)
+                console.log('Game details received from server:', gameData);
+
+                displayGameDetails(gameData);
+            } catch (error) {
+                console.error('Error fetching game details:', error);
+                // Display error message or handle error as needed
+            }
+        }
+
+        function displayGameDetails(gameData) {
+            const gameDetailsContainer = document.getElementById('gameDetails');
+
+            // Extracting title, franchise, and other details from game object
+            const game = gameData.game; // Access the game object directly
+            const title = game.Title ? game.Title : 'Unknown Title';
+            const franchise = game.Franchise ? game.Franchise : 'Unknown Franchise';
+            const platformText = game.Platform ? game.Platform : 'Unknown';
+            const mainQuests = game.MainQuests !== undefined ? game.MainQuests : 0;
+            const completedMainQuests = game.CompletedMainQuests !== undefined ? game.CompletedMainQuests : 0;
+            const sideQuests = game.SideQuests !== undefined ? game.SideQuests : 0;
+            const completedSideQuests = game.CompletedSideQuests !== undefined ? game.CompletedSideQuests : 0;
+            const collectibles = game.Collectibles !== undefined ? game.Collectibles : 0;
+            const collectedCollectibles = game.CollectedCollectibles !== undefined ? game.CollectedCollectibles : 0;
+
+            // Calculate completion percentage based on main quests or side quests / collectibles
+            let completionPercentage;
+            if (sideQuests > 0 || collectibles > 0) {
+                completionPercentage = (completedSideQuests + collectedCollectibles) / (sideQuests + collectibles) * 100;
+            } else {
+                completionPercentage = mainQuests !== 0 ? (completedMainQuests / mainQuests) * 100 : 0;
+            }
+
+            // Update the dynamic title
+            document.getElementById('dynamicTitle').textContent = title;
+
+            // Construct the HTML for displaying game details
+            const gameHTML = `
+                <div class="game-overview">
+                    <div class="game-details">
+                         <div class="game-details-info">
+                            <h2>Game Details:</h2>
+                            <p>Title: ${title}</p>
+                            <p>Franchise: ${franchise}</p>
+                            <p>Platform: ${platformText}</p>
+                        </div>
+                        <div class="game-info">
+                            <h2>Game Progress:</h2>
+                            <p>Main Quests: ${mainQuests}</p>
+                            <p>Completed Main Quests: ${completedMainQuests}</p>
+                            <p>Side Quests: ${sideQuests}</p>
+                            <p>Completed Side Quests: ${completedSideQuests}</p>
+                            <p>Collectibles: ${collectibles}</p>
+                            <p>Collected Collectibles: ${collectedCollectibles}</p>
+                            <p>Completion Percentage: ${completionPercentage.toFixed(2)}%</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+
+            // Insert the HTML into the game details container
+            gameDetailsContainer.innerHTML = gameHTML;
+        }
+
+        // Fetch game details when the page loads
+        fetchGameDetails();
+    </script>
+</body>
+
+</html>

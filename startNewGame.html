@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="startNewGame.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="header" class="header">
+        <a href="homepage.html" class="back-button">Back</a>
+        <h1>Start new Game...</h1>
+        <div class="header-content">
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Create New Game</h1>
+        <form id="gameForm">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="franchise">Franchise:</label>
+            <input type="text" id="franchise" name="franchise" required><br><br>
+
+            <label for="platform">Platform:</label>
+            <input type="text" id="platform" name="platform" required><br><br>
+
+            <label for="mainQuests">Main Quests:</label>
+            <input type="number" id="mainQuests" name="mainQuests" required><br><br>
+
+            <label for="sideQuests">Side Quests:</label>
+            <input type="number" id="sideQuests" name="sideQuests" required><br><br>
+
+            <label for="completedMainQuests">Completed Main Quests:</label>
+            <input type="number" id="completedMainQuests" name="completedMainQuests" required><br><br>
+
+            <label for="completedSideQuests">Completed Side Quests:</label>
+            <input type="number" id="completedSideQuests" name="completedSideQuests" required><br><br>
+
+            <label for="collectibles">Collectibles:</label>
+            <input type="number" id="collectibles" name="collectibles" required><br><br>
+
+            <label for="collectedCollectibles">Collected Collectibles:</label>
+            <input type="number" id="collectedCollectibles" name="collectedCollectibles" required><br><br>
+
+            <button type="button" id="submitButton">Create Game</button>
+        </form>
+    </div>
+
+    <!-- Confirmation popup overlay -->
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <h2>Are you sure you want to start a new game?</h2>
+            <p>This action cannot be undone.</p>
+            <button id="confirmYes">Yes</button>
+            <button id="confirmNo">No</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('gameForm');
+        const overlay = document.getElementById('overlay');
+        const confirmYes = document.getElementById('confirmYes');
+        const confirmNo = document.getElementById('confirmNo');
+        const submitButton = document.getElementById('submitButton');
+
+        // Function to display confirmation popup
+        function showConfirmationPopup() {
+            overlay.style.display = 'flex';
+        }
+
+        // Function to hide confirmation popup
+        function hideConfirmationPopup() {
+            overlay.style.display = 'none';
+        }
+
+        // Function to check if form is valid
+        function isFormValid() {
+            return form.checkValidity();
+        }
+
+        // Event listener for submit button
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isFormValid()) {
+                showConfirmationPopup();
+            } else {
+                form.reportValidity();
+            }
+        });
+
+        // Event listener for Yes button in confirmation popup
+        confirmYes.addEventListener('click', async () => {
+            hideConfirmationPopup();
+
+            // Process form submission
+            const formData = new FormData(form);
+            const title = formData.get('title');
+            const franchise = formData.get('franchise');
+            const platform = formData.get('platform');
+            const mainQuests = parseInt(formData.get('mainQuests'));
+            const sideQuests = parseInt(formData.get('sideQuests'));
+            const completedMainQuests = parseInt(formData.get('completedMainQuests'));
+            const completedSideQuests = parseInt(formData.get('completedSideQuests'));
+            const collectibles = parseInt(formData.get('collectibles'));
+            const collectedCollectibles = parseInt(formData.get('collectedCollectibles'));
+
+            try {
+                const response = await fetch('http://localhost:3000/games', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title,
+                        franchise,
+                        platform,
+                        mainQuests,
+                        sideQuests,
+                        completedMainQuests,
+                        completedSideQuests,
+                        collectibles,
+                        collectedCollectibles
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create game');
+                }
+
+                alert('Game created successfully');
+                form.reset(); // Clear form fields
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to create game');
+            }
+        });
+
+        // Event listener for No button in confirmation popup
+        confirmNo.addEventListener('click', () => {
+            hideConfirmationPopup();
+        });
+    </script>
+
+
+    
+</body>
+</html>
