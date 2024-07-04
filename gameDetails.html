@@ -10,7 +10,7 @@
 <body>
 
 <div id="header" class="header">
-    <a href="gamesLibrary.html" class="header-button back-button">Back</a>
+    <a href="index.html" class="header-button back-button">Back</a>
     <div class="header-buttons">
         <button id="deleteButton" class="header-button" onclick="openModal()">Game Over?</button>
         <button id="editButton" class="header-button" onclick="openUpdatePage()">Edit Game</button>
@@ -194,7 +194,7 @@
             }
 
             // Optionally, redirect to another page after deletion
-            window.location.href = 'gamesLibrary.html';
+            window.location.href = 'index.html';
         } catch (error) {
             console.error('Error deleting game:', error);
             // Display error message or handle error as needed
