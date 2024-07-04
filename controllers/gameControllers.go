@@ -18,13 +18,16 @@ func GamesCreate(c *gin.Context) {
 		CompletedSideQuests   int
 		Collectibles          int
 		CollectedCollectibles int
+		CurrentlyPlaying      string
+		GameGuide             string
+		GameMap               string
 	}
 
 	c.Bind(&body)
 
 	//create a Game
 
-	game := models.Game{Title: body.Title, Franchise: body.Franchise, Platform: body.Platform, MainQuests: body.MainQuests, SideQuests: body.SideQuests, CompletedMainQuests: body.CompletedMainQuests, CompletedSideQuests: body.CompletedSideQuests, Collectibles: body.Collectibles, CollectedCollectibles: body.CollectedCollectibles}
+	game := models.Game{Title: body.Title, Franchise: body.Franchise, Platform: body.Platform, MainQuests: body.MainQuests, SideQuests: body.SideQuests, CompletedMainQuests: body.CompletedMainQuests, CompletedSideQuests: body.CompletedSideQuests, Collectibles: body.Collectibles, CollectedCollectibles: body.CollectedCollectibles, CurrentlyPlaying: body.CurrentlyPlaying, GameGuide: body.GameGuide, GameMap: body.GameMap}
 
 	result := initalizers.DB.Create(&game)
 
@@ -51,21 +54,6 @@ func GamesIndex(c *gin.Context) {
 	})
 
 }
-
-// func GamesShow(c *gin.Context) {
-// 	//get ID from URL
-// 	id := c.Param("id")
-
-// 	// Get the posts
-// 	var game models.Game
-// 	initalizers.DB.First(&game, id)
-
-// 	// Respond with them
-// 	c.JSON(200, gin.H{
-// 		"game": game,
-// 	})
-
-// }
 
 func GamesShow(c *gin.Context) {
 	// Get ID from URL
@@ -101,6 +89,9 @@ func GamesUpdate(c *gin.Context) {
 		CompletedSideQuests   int
 		Collectibles          int
 		CollectedCollectibles int
+		CurrentlyPlaying      string
+		GameGuide             string
+		GameMap               string
 	}
 
 	c.Bind(&body)
@@ -120,6 +111,9 @@ func GamesUpdate(c *gin.Context) {
 		CompletedSideQuests:   body.CompletedSideQuests,
 		Collectibles:          body.Collectibles,
 		CollectedCollectibles: body.CollectedCollectibles,
+		CurrentlyPlaying:      body.CurrentlyPlaying,
+		GameGuide:             body.GameGuide,
+		GameMap:               body.GameMap,
 	})
 
 	//respond with it

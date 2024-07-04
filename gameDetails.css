@@ -1,59 +1,43 @@
-/* General styles */
+
 body {
     font-family: "Press Start 2P", system-ui;
-    font-size: 10px;
+    margin: 0;
+    padding: 0;
     background-color: black;
     color: white;
+font-size: 10px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
-    margin: 0; /* Ensure no default margin */
-  }
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px white;
+}
+
+h1, h2 {
+    font-family: "Press Start 2P", system-ui;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 20px solid transparent;
-    box-sizing: border-box;
-    padding: 0 20px;
     background-color: black;
-}
-
-.header .title-section {
+    color: #fff;
+    padding: 10px 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
-.header h1 {
-    text-align: center;
-    font-weight: 400;
-    font-style: normal;
-    margin: 0;
-    font-family: "Press Start 2P", system-ui;
-    flex-grow: 1;
-}
-
-.header h2 {
-    font-size: 1.5rem; /* Adjust font size as needed */
-    font-weight: normal;
-    margin-top: 5px;
-    color: #999;
-}
-
-.header h3 {
-    font-size: 1.2rem; /* Adjust font size as needed */
-    font-weight: normal;
-    margin-top: 5px;
-    color: #ccc;
-}
-
-.back-button, .home-button {
+.header-button {
     background-color: black;
     color: white;
     padding: 10px 20px;
@@ -66,142 +50,134 @@ body {
     font-family: "Press Start 2P", system-ui;
 }
 
-h1, h2, h3 {
+.header-button-right {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
     text-align: center;
-    font-weight: 400;
-    font-style: normal;
-    margin: 0;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 2px white;
     font-family: "Press Start 2P", system-ui;
 }
 
-  #filterBox {
-    margin-left: 20px; /* Add space between filter box and back button */
-    margin-right: 20px; /* Add space between filter box and right edge */
-  }
-  
- 
-  
-  
-  #gamesList {
-    max-width: 800px;
-    margin: 120px auto 20px; /* Adjust margin top to accommodate header height */
-    padding: 20px;
-    background-color: black;
-    border-radius: 8px;
-    box-shadow: 0 0 10px white;
-  }
-  
-  .game {
+.header-button-right:hover {
+    background-color: #4CAF50; 
+    color: white; 
+}
+
+
+.header-button:hover {
+    background-color: #4CAF50; 
+    color: white; 
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#dynamicTitle {
+    font-size: 24px;
+    margin: 0;
+}
+
+.game-details-info,
+.game-info,
+.game-support {
     margin-bottom: 20px;
     padding: 10px;
-    background-color: white;
+    background-color: black;
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .game h3 {
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  .game p {
-    color: #666;
-  }
-  
-  hr {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 10px 0;
-  }
+    color: white;
+    box-shadow: 0 0 4px white;
+}
 
-  .buttons {
-    max-width: 800px;
-    padding: 20px;
-    background-color: black;
-    border-radius: 8px;
-    color: white; /* Ensure text is white */
-    margin-bottom: 10px;
-    display: flex;
-    justify-content:flex-end -evenly;
-  }
-  
-  /* Add the game-details styles here */
-  .game-overview {
-    max-width: 800px;
-    padding: 20px;
-    background-color: black;
-    border-radius: 8px;
-    box-shadow: 0 0 10px white;
-    color: white; /* Ensure text is white */
-    margin: 140px auto 20px; /* Adjust margin top to be slightly below the header */
+.game-details-info h2,
+.game-info h2,
+.game-suppport h2 {
+    margin-bottom: 10px; /* Bottom margin for the heading */
+}
 
-  }
+.game-details-info p,
+.game-info p, 
+.game-support p{
+    margin: 5px 0; /* Margin for paragraphs */
+}
 
-  .game-details {
-    max-width: 800px;
-    padding: 20px;
-    background-color: black;
-    border-radius: 8px;
-    box-shadow: 0 0 10px white;
-    color: white; /* Ensure text is white */
-  }
-  
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
 
-  .game-progress {
-    max-width: 800px;
-    padding: 20px;
+.modal-content {
     background-color: black;
+    color: white;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px white;
-    color: white; /* Ensure text is white */
-  }
-  
-  .life-hearts {
-    width: auto; /* Adjust size as needed */
-    height: 25px; /* Set a fixed height */
-    margin-left: auto; /* Auto margin on the left */
-    margin-right: 0; /* No margin on the right */
-    align-self: center; /* Center vertically */
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .game {
-        padding: 8px;
-    }
-  
-    .header {
-        height: auto; /* Allow header height to adjust based on content */
-        flex-direction: column; /* Stack items vertically */
-        align-items: flex-start; /* Align items to the start */
-    }
-  
-    .back-button {
-        margin-top: 10px; /* Add space between back button and h1 */
-    }
-  
-    h1 {
-        text-align: center; /* Align h1 to the center */
-        margin-top: 10px; /* Add space between h1 and filter box */
-    }
-  
-    #filterBox {
-      margin-left: auto; /* Push filter box to the right */
-      margin-right: 20px; /* Add some margin for spacing */
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .game {
-        flex-direction: column; /* Stack items vertically on smaller screens */
-        align-items: center; /* Center items horizontally in the column */
-        text-align: center; /* Center text within game column */
-    }
-  
-    .life-hearts {
-        margin-left: auto; /* Auto margin on the left */
-        margin-right: auto; /* Auto margin on the right */
-        margin-top: 10px; /* Add top margin for separation */
-    }
-  }
-  
+    text-align: center;
+    box-shadow: 0 0 4px white;
+    border: #fff;
+}
+
+.modal-button {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirm-btn {
+    background-color: black;
+    color: white;
+    box-shadow: 0 0 4px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.cancel-btn {
+    background-color: black;
+    color: white;
+    box-shadow: 0 0 4px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.confirm-btn:hover {
+    opacity: 0.8;
+    background-color: black;
+    color: green;
+    box-shadow: 0 0 4px green;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.cancel-btn:hover {
+    opacity: 0.8;
+    background-color: black;
+    color: red;
+    box-shadow: 0 0 4px red;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.hearts {
+    max-width: 100%;
+    height: 20px;
+    display: block;
+}
+a {
+    color: white; /* Default color for links */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    color: #4CAF50; /* Change color on hover */
+}

@@ -1,122 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Games List</title>
     <link rel="stylesheet" href="gamesLibrary.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <div id="header" class="header">
-        <a href="homepage.html" class="back-button">Home</a>
-        <h1>Loading Progress...</h1>
-        <div class="header-content">
-            <!-- Filter box -->
-            <div id="filterBox">
-                <label for="filterInput">Filter by Title:</label>
-                <input type="text" id="filterInput" oninput="filterGames()">
-            </div>
-        </div>
+        <!-- Header content here if needed -->
     </div>
 
-    <div id="gamesList"></div>
+    <div class="container">
+        <!-- Start New Game button -->
+        <div class="startNewGame">
+            <a href="startNewGame.html" class="startNewGame-button">Start New Game</a>
+        </div>
+
+        <!-- Filter box -->
+        <div class="filterBox">
+            <label for="filterInput">Filter by Title, Franchise, Platform:</label>
+            <input type="text" id="filterInput" oninput="filterGames()">
+            <label for="filterStatus">Status:</label>
+            <select id="filterStatus" onchange="filterGames()">
+                <option value="">All</option>
+                <option value="Currently Playing" selected>Currently Playing</option>
+                <option value="Paused">Paused</option>
+                <option value="Completed">Completed</option>
+                <option value="Not Started">Not Started</option>
+            </select>
+        </div>
+
+        <!-- Game list -->
+        <div id="gamesList" class="gamesList">
+            <!-- Game details will be dynamically added here -->
+        </div>
+    </div>
 
     <script>
         async function fetchGames() {
             try {
-                const response = await fetch('http://localhost:3000/games');
+                const response = await fetch('http://localhost:8080/games');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                let data = await response.json();
-
-                // Log the received data
-                console.log('Data received from server:', data);
-
-                // Extract the games array from the response data
-                let games = data.games;
-
-                // Log the extracted games array
-                console.log('Extracted games array:', games);
-
-                displayGames(games);
+                const data = await response.json();
+                console.log('Fetched games data:', data); // Debugging: log the fetched data
+                displayGames(data.games);
             } catch (error) {
                 console.error('Error fetching games:', error);
-                // Optionally, display an error message or handle retries
+                // Display error message or handle retries
             }
         }
 
         function displayGames(games) {
-            console.log('Games received for display:', games); // Check what games actually contains
-
             const gamesList = document.getElementById('gamesList');
-            gamesList.innerHTML = '<h2>Gaming Library</h2><p></p>';
+            gamesList.innerHTML = '';
 
-            if (Array.isArray(games)) {
-                games.forEach(game => {
-                    // Log each game object
-                    console.log('Game object:', game);
+            games.forEach(game => {
+                const gameElement = document.createElement('div');
+                gameElement.classList.add('game');
 
-                    const gameElement = document.createElement('div');
-                    gameElement.classList.add('game');
+                const platformText = game.Platform ? game.Platform : 'Unknown';
+                const gameUrl = `gameDetails.html?id=${game.ID}`;
 
-                    // Check if the platform is empty and provide a default message if it is
-                    const platformText = game.Platform ? game.Platform : 'Unknown';
+                // Calculate completion percentages
+                const mainQuests = parseInt(game.MainQuests);
+                const completedMainQuests = parseInt(game.CompletedMainQuests);
+                const sideQuests = parseInt(game.SideQuests);
+                const completedSideQuests = parseInt(game.CompletedSideQuests);
+                const collectibles = parseInt(game.Collectibles);
+                const collectedCollectibles = parseInt(game.CollectedCollectibles);
 
-                    // Construct the URL to the specific game record
-                    const gameUrl = `gameDetails.html?id=${game.ID}`; // Update with actual game details page URL
+                // Calculate total counts and completed counts
+                const totalQuests = mainQuests + sideQuests;
+                const completedQuests = completedMainQuests + completedSideQuests;
 
-                    // Calculate percentage of completed main quests
-                    const mainQuests = game.MainQuests;
-                    const completedMainQuests = game.CompletedMainQuests;
-                    const completionPercentage = (completedMainQuests / mainQuests) * 100;
+                // Calculate overall completion percentages
+                const questsPercentage = totalQuests > 0 ? (completedQuests / totalQuests) * 100 : 0;
+                const collectiblesPercentage = collectibles > 0 ? (collectedCollectibles / collectibles) * 100 : 0;
 
-                    // Determine image based on completion percentage
-                    let imageSrc = '';
-                    if (completionPercentage >= 80) {
-                        imageSrc = 'Assets/Hearts/Hundred.png'; // Image for 80-100%
-                    } else if (completionPercentage >= 60) {
-                        imageSrc = 'Assets/Hearts/Eighty.png'; // Image for 60-79%
-                    } else if (completionPercentage >= 40) {
-                        imageSrc = 'Assets/Hearts/Sixty.png'; // Image for 40-59%
-                    } else if (completionPercentage >= 20) {
-                        imageSrc = 'Assets/Hearts/Forty.png'; // Image for 20-39%
-                    } else {
-                        imageSrc = 'Assets/Hearts/Zero.png'; // Image for 0-19% (assuming this range)
-                    }
+                // Calculate total completion percentage
+                const totalCompletionPercentage = (questsPercentage + collectiblesPercentage) / 2; // Adjust as needed for your specific calculation logic
 
-                    gameElement.innerHTML = `
-                        <div class="game-details">
-                            <h3><a href="${gameUrl}">${game.Title}</a></h3>
-                            <p>Franchise: ${game.Franchise}</p>
-                            <p>Platform: ${platformText}</p>
-                            <p>Completion Percentage: ${completionPercentage.toFixed(2)}%</p>
-                        </div>
-                        <img src="${imageSrc}" alt="Completion Image" class="life-hearts">
-                        <hr>
-                    `;
-                    gamesList.appendChild(gameElement);
-                });
-            } else {
-                console.error('Expected an array of games, but received:', games);
-            }
+                // Determine image based on total completion percentage
+                let imageSrc = '';
+                if (totalCompletionPercentage >= 80) {
+                    imageSrc = 'Assets/Hearts/Hundred.png'; // Image for 80-100%
+                } else if (totalCompletionPercentage >= 60) {
+                    imageSrc = 'Assets/Hearts/Eighty.png'; // Image for 60-79%
+                } else if (totalCompletionPercentage >= 40) {
+                    imageSrc = 'Assets/Hearts/Sixty.png'; // Image for 40-59%
+                } else if (totalCompletionPercentage >= 20) {
+                    imageSrc = 'Assets/Hearts/Forty.png'; // Image for 20-39%
+                } else {
+                    imageSrc = 'Assets/Hearts/Zero.png'; // Image for 0-19% (assuming this range)
+                }
+
+                // Create a container div for game details
+                const gameDetailsDiv = document.createElement('div');
+                gameDetailsDiv.classList.add('game-details');
+
+                // Calculate completion percentage text
+                const completionPercentageText = `Completion: ${totalCompletionPercentage.toFixed(2)}%`;
+
+                // Append elements to gameDetailsDiv
+                gameDetailsDiv.innerHTML = `
+                    <h3><a href="${gameUrl}">${game.Title}</a></h3>
+                    <p class="franchise">Franchise: ${game.Franchise}</p>
+                    <p class="platform">Platform: ${platformText}</p>
+                    <p class="status">Status: ${game.CurrentlyPlaying ? game.CurrentlyPlaying : 'Unknown'}</p>
+                    <p class="completion-percentage">${completionPercentageText}</p>
+                    <img src="${imageSrc}" alt="Completion Image">
+                `;
+
+                // Append gameDetailsDiv to gameElement
+                gameElement.appendChild(gameDetailsDiv);
+
+                // Append gameElement to gamesList
+                gamesList.appendChild(gameElement);
+            });
+
+            filterGames(); // Apply the filter after displaying the games
         }
 
         function filterGames() {
-            const filterValue = document.getElementById('filterInput').value.toUpperCase();
+            const filterValue = document.getElementById('filterInput').value.trim().toUpperCase();
+            const filterStatus = document.getElementById('filterStatus').value.toUpperCase();
             const gameElements = document.querySelectorAll('.game');
 
             gameElements.forEach(element => {
-                const title = element.querySelector('h3').innerText.toUpperCase();
-                if (title.includes(filterValue)) {
-                    element.style.display = 'block'; // Show game if title matches filter
+                const title = element.querySelector('h3 a').innerText.toUpperCase();
+                const franchise = element.querySelector('.franchise').innerText.toUpperCase();
+                const platform = element.querySelector('.platform').innerText.toUpperCase();
+                const status = element.querySelector('.status').innerText.toUpperCase();
+
+                const isTitleMatch = title.includes(filterValue);
+                const isFranchiseMatch = franchise.includes(filterValue);
+                const isPlatformMatch = platform.includes(filterValue);
+                const isStatusMatch = filterStatus === '' || status.includes(filterStatus);
+
+                if ((isTitleMatch || isFranchiseMatch || isPlatformMatch) && isStatusMatch) {
+                    element.style.display = 'block';
                 } else {
-                    element.style.display = 'none'; // Hide game if title does not match filter
+                    element.style.display = 'none';
                 }
             });
         }
@@ -125,5 +153,4 @@
         fetchGames();
     </script>
 </body>
-
 </html>

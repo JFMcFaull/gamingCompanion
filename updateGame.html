@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Game</title>
+    <!-- Include any CSS stylesheets here -->
+    <link rel="stylesheet" href="updateGame.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+</head>
+<body>
+
+<div id="header" class="header">
+    <h1>Update Game Details</h1>
+</div>
+
+<!-- Separate div for currently playing games -->
+<div id="currentlyPlayingGames" class="currently-playing">
+    <h2>Currently Playing Games</h2>
+    <div id="currentGamesList">
+        <!-- Game details will be inserted here dynamically -->
+    </div>
+</div>
+
+<div class="container">
+    <a href="#" class="header-button back-button" onclick="goBack()">Back</a>
+    <form id="gameForm">
+        <br>
+        <br>
+        <br>
+        <br>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="franchise">Franchise:</label>
+        <input type="text" id="franchise" name="franchise"><br><br>
+
+        <label for="platform">Platform:</label><br><br>
+        <select id="platform" name="platform" class="custom-select" required>
+            <option value="">Select Platform</option>
+            <optgroup label="Nintendo Consoles">
+                <option value="Nintendo Entertainment System">Nintendo Entertainment System</option>
+                <option value="Nintendo Gameboy">Nintendo Gameboy (including Classic, Pocket and Colour)</option>
+                <option value="Super Nintendo Entertainment System">Super Nintendo Entertainment System</option>
+                <option value="Nintendo Virtual Boy">Nintendo Virtual Boy</option>
+                <option value="Nintendo 64">Nintendo 64</option>
+                <option value="Nintendo Gameboy Advance">Nintendo Advance (including Original, SP and Micro)</option>
+                <option value="Nintendo Gamecube">Nintendo Gamecube</option>
+                <option value="Nintendo DS">Nintendo DS (including Original, Lite, DSi and DSi XL)</option>
+                <option value="Nintendo Wii">Nintendo Wii</option>
+                <option value="Nintendo 3DS">Nintendo 3DS (including Original, 3DS XL, 2DS, New Nintendo 3DS XL and New Nintendo 2DS Xl)</option>
+                <option value="Nintendo Wii U">Nintendo Wii U</option>
+                <option value="Nintendo Switch">Nintendo Switch</option>
+            </optgroup>
+            <optgroup label="Sega Consoles">
+                <option value="Sega Master System">Sega Master System (including Master System II)</option>
+                <option value="Sega Mega Drive">Sega Mega Drive (including Model 1, Model 2, Model 3)</option>
+                <option value="Sega Game Gear">Sega Game Gear</option>
+                <option value="Sega Mega-CD">Sega Mega-CD (including Model 1 and Model 2)</option>
+                <option value="Sega 32X">Sega 32X</option>
+                <option value="Sega Saturn">Sega Saturn</option>
+                <option value="Sega Dreamcast">Sega Dreamcast</option>
+                <option value="Sega Nomad">Sega Nomad</option>
+                <option value="Sega Pico">Sega Pico</option>
+            </optgroup>
+            <optgroup label="PlayStation Consoles">
+                <option value="PlayStation">PlayStation (PS1)</option>
+                <option value="PlayStation 2">PlayStation 2 (PS2)</option>
+                <option value="PlayStation Portable">PlayStation Portable (PSP)</option>
+                <option value="PlayStation 3">PlayStation 3 (PS3)</option>
+                <option value="PlayStation Vita">PlayStation Vita (PS Vita)</option>
+                <option value="PlayStation 4">PlayStation 4 (PS4)</option>
+                <option value="PlayStation 5">PlayStation 5 (PS5)</option>
+            </optgroup>
+            <optgroup label="Xbox Consoles">
+                <option value="Xbox">Xbox (Original)</option>
+                <option value="Xbox 360">Xbox 360 (including Core, Pro, Elite, Arcade, Slim, E)</option>
+                <option value="Xbox One">Xbox One (including Original, S, X)</option>
+                <option value="Xbox Series X|S">Xbox Series X|S (including Series X and Series S)</option>
+            </optgroup>
+        </select><br><br>
+
+        <label for="mainQuests">Main Quests:</label>
+        <input type="number" id="mainQuests" name="mainQuests" min="0"><br><br>
+
+        <label for="sideQuests">Side Quests:</label>
+        <input type="number" id="sideQuests" name="sideQuests" min="0"><br><br>
+
+        <label for="completedMainQuests">Completed Main Quests:</label>
+        <input type="number" id="completedMainQuests" name="completedMainQuests" min="0"><br><br>
+
+        <label for="completedSideQuests">Completed Side Quests:</label>
+        <input type="number" id="completedSideQuests" name="completedSideQuests" min="0"><br><br>
+
+        <label for="collectibles">Collectibles:</label>
+        <input type="number" id="collectibles" name="collectibles" min="0"><br><br>
+
+        <label for="collectedCollectibles">Collected Collectibles:</label>
+        <input type="number" id="collectedCollectibles" name="collectedCollectibles" min="0"><br><br>
+
+        <label for="currentlyPlaying">Are you currently playing this game?</label>
+        <select id="currentlyPlaying" name="currentlyPlaying">
+            <option value="Currently Playing">Currently Playing</option>
+            <option value="Paused">Paused</option>
+            <option value="Completed">Completed</option>
+            <option value="Not Started">Not Started</option>
+        </select><br><br>
+
+        <label for="gameGuide">Game Guide URL:</label>
+        <input type="url" id="gameGuide" name="gameGuide" required pattern="https?://.*"><br><br>
+        
+        <label for="gameMap">Game Map URL:</label>
+        <input type="url" id="gameMap" name="gameMap" required pattern="https?://.*"><br><br>
+        
+
+        <button type="button" onclick="updateGame()">Update Game</button>
+    </form>
+</div>
+
+<script>
+    async function fetchGameDetails() {
+        try {
+            // Extract game ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameId = urlParams.get('id');
+
+            const response = await fetch(`http://localhost:8080/games/${gameId}`); // Adjust URL as needed
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const gameData = await response.json();
+
+            // Populate the form with current game details
+            populateUpdateForm(gameData.game);
+
+            // Fetch and display currently playing games
+            fetchCurrentlyPlayingGames();
+        } catch (error) {
+            console.error('Error fetching game details:', error);
+            // Display error message or handle error as needed
+        }
+    }
+
+    function populateUpdateForm(game) {
+        document.getElementById('title').value = game.Title ? game.Title : '';
+        document.getElementById('franchise').value = game.Franchise ? game.Franchise : '';
+        document.getElementById('platform').value = game.Platform ? game.Platform : '';
+        document.getElementById('mainQuests').value = game.MainQuests !== undefined ? game.MainQuests : '';
+        document.getElementById('sideQuests').value = game.SideQuests !== undefined ? game.SideQuests : '';
+        document.getElementById('completedMainQuests').value = game.CompletedMainQuests !== undefined ? game.CompletedMainQuests : '';
+        document.getElementById('completedSideQuests').value = game.CompletedSideQuests !== undefined ? game.CompletedSideQuests : '';
+        document.getElementById('collectibles').value = game.Collectibles !== undefined ? game.Collectibles : '';
+        document.getElementById('collectedCollectibles').value = game.CollectedCollectibles !== undefined ? game.CollectedCollectibles : '';
+        document.getElementById('currentlyPlaying').value = game.CurrentlyPlaying !== undefined ? game.CurrentlyPlaying.toString() : 'false';
+        document.getElementById('gameGuide').value = game.GameGuide ? game.GameGuide : '';
+        document.getElementById('gameMap').value = game.GameMap ? game.GameMap : '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the input fields
+        const mainQuestsInput = document.getElementById('mainQuests');
+        const sideQuestsInput = document.getElementById('sideQuests');
+        const completedMainQuestsInput = document.getElementById('completedMainQuests');
+        const completedSideQuestsInput = document.getElementById('completedSideQuests');
+        const collectiblesInput = document.getElementById('collectibles');
+        const collectedCollectiblesInput = document.getElementById('collectedCollectibles');
+
+        // Validate completed quests
+        completedMainQuestsInput.addEventListener('input', function() {
+            if (parseInt(completedMainQuestsInput.value) > parseInt(mainQuestsInput.value)) {
+                completedMainQuestsInput.setCustomValidity('Completed main quests cannot exceed total main quests.');
+            } else {
+                completedMainQuestsInput.setCustomValidity('');
+            }
+        });
+
+        completedSideQuestsInput.addEventListener('input', function() {
+            if (parseInt(completedSideQuestsInput.value) > parseInt(sideQuestsInput.value)) {
+                completedSideQuestsInput.setCustomValidity('Completed side quests cannot exceed total side quests.');
+            } else {
+                completedSideQuestsInput.setCustomValidity('');
+            }
+        });
+
+        // Validate collected collectibles
+        collectedCollectiblesInput.addEventListener('input', function() {
+            if (parseInt(collectedCollectiblesInput.value) > parseInt(collectiblesInput.value)) {
+                collectedCollectiblesInput.setCustomValidity('Collected collectibles cannot exceed total collectibles.');
+            } else {
+                collectedCollectiblesInput.setCustomValidity('');
+            }
+        });
+    });
+
+    async function updateGame() {
+    try {
+        // Extract game ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('id');
+
+        // Validate URLs
+        const gameGuideInput = document.getElementById('gameGuide');
+        const gameMapInput = document.getElementById('gameMap');
+        if (!isValidURL(gameGuideInput.value) || !isValidURL(gameMapInput.value)) {
+            throw new Error('Please enter valid URLs for Game Guide and Game Map.');
+        }
+
+        // Gather updated data from the form
+        const updatedGame = {
+            Title: document.getElementById('title').value,
+            Franchise: document.getElementById('franchise').value,
+            Platform: document.getElementById('platform').value,
+            MainQuests: parseInt(document.getElementById('mainQuests').value),
+            SideQuests: parseInt(document.getElementById('sideQuests').value),
+            CompletedMainQuests: parseInt(document.getElementById('completedMainQuests').value),
+            CompletedSideQuests: parseInt(document.getElementById('completedSideQuests').value),
+            Collectibles: parseInt(document.getElementById('collectibles').value),
+            CollectedCollectibles: parseInt(document.getElementById('collectedCollectibles').value),
+            CurrentlyPlaying: document.getElementById('currentlyPlaying').value,
+            GameGuide: gameGuideInput.value,
+            GameMap: gameMapInput.value
+        };
+
+        const response = await fetch(`http://localhost:8080/games/${gameId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedGame)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update game details. Please try again later.');
+        }
+
+        // Redirect back to gameDetails.html after update
+        window.location.href = `gameDetails.html?id=${gameId}`;
+    } catch (error) {
+        // Display user-friendly error message
+        console.error('Error updating game:', error);
+        if (error instanceof TypeError) {
+            alert('Network error occurred. Please check your internet connection and try again.');
+        } else {
+            alert(error.message);
+        }
+    }
+}
+
+function isValidURL(url) {
+    // Regular expression for URL validation (http://, https://, www.)
+    const urlPattern = /^(https?:\/\/)?(www\.)?[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/;
+    return urlPattern.test(url);
+}
+
+    function goBack() {
+        window.history.back(); // Go back to the previous page
+    }
+
+    async function fetchCurrentlyPlayingGames() {
+        try {
+            const response = await fetch('http://localhost:8080/currentlyPlayingGames');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const currentGames = await response.json();
+
+            displayCurrentlyPlayingGames(currentGames);
+        } catch (error) {
+            console.error('Error fetching currently playing games:', error);
+            // Display error message or handle error as needed
+        }
+    }
+
+    function displayCurrentlyPlayingGames(currentGames) {
+        const currentGamesList = document.getElementById('currentGamesList');
+
+        // Clear previous content
+        currentGamesList.innerHTML = '';
+
+        // Display each currently playing game
+        currentGames.forEach(game => {
+            const gameElement = document.createElement('div');
+            gameElement.classList.add('current-game');
+            gameElement.innerHTML = `
+                <h3>${game.Title}</h3>
+                <p>Completion: ${game.CompletionPercentage}%</p>
+            `;
+            currentGamesList.appendChild(gameElement);
+        });
+    }
+
+    // Fetch game details and populate form when the page loads
+    fetchGameDetails();
+</script>
+
+</body>
+</html>

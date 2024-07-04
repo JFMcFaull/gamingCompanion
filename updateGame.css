@@ -1,0 +1,358 @@
+body {
+    font-family: "Press Start 2P", system-ui;
+    font-size: 10px;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    margin: 0; 
+}
+
+
+.container {
+    position: relative; 
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: black;
+    color: white;
+    box-shadow: 0 0 10px white;
+    margin-top: 60px;
+}
+
+button {
+    background-color: black;
+    color: white; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 10px;
+    cursor: pointer; 
+    border-radius: 8px;
+    box-shadow: 0 0 2px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+button:hover {
+    background-color: #4CAF50; 
+    color: white; 
+}
+
+.back-button {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    background-color: black; 
+    color: white; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none;
+    font-size: 10px; 
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 2px white;
+    font-family: "Press Start 2P", system-ui;
+    z-index: 100;
+}
+
+.back-button:hover {
+    background-color: #4CAF50; 
+    color: white; 
+}
+
+
+  
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 20px solid transparent;
+    box-sizing: border-box;
+    padding: 0 20px;
+    background-color: black;
+}
+
+.header-content {
+    display: flex;
+    flex-grow: 1; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+h1 {
+    text-align: center;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0; 
+    font-family: "Press Start 2P", system-ui;
+    flex-grow: 1; 
+    color: white;
+}
+
+
+.container h1 {
+    color: red;
+}
+
+#gameFormContainer {
+    max-width: 800px;
+    margin: 120px auto 20px; 
+    padding: 20px;
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px white;
+    color: white; 
+}
+
+#submitButton {
+    background-color: black; 
+    color: white; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 16px; 
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 2px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+#submitButton:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background-color: black;
+    font-family: "Press Start 2P", system-ui;
+}
+
+input[type="url"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid white; 
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background-color: black;
+    font-family: "Press Start 2P", system-ui;
+}
+
+input[type="url"]:focus {
+    outline: none;
+    border-color: #4CAF50; 
+}
+
+#custom-select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background-color: black;
+    font-family: "Press Start 2P", system-ui;
+}
+
+#submitButton {
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+label {
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: auto; 
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .back-button {
+        margin-top: 10px; 
+    }
+
+    h1 {
+        text-align: center; 
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .game {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .gameForm {
+        max-width: 100%;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-family: "Press Start 2P", system-ui;
+
+}
+
+.popup {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 2px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.popup h2 {
+    margin-top: 0;
+}
+
+.popup p {
+    margin-bottom: 20px;
+}
+
+.popup button {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 2px white;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.custom-select {
+    appearance: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: black;
+    color: white;
+    width: 100%;
+    max-width: auto; 
+    font-family: "Press Start 2P", system-ui;
+    font-size: 10px;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #007bff; 
+}
+
+.custom-select option {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+}
+
+.custom-select optgroup {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.custom-alert {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    z-index: 1000; 
+}
+
+.custom-alert .alert-content {
+    margin-bottom: 10px;
+}
+
+.custom-alert .closeButton {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.custom-alert .closeButton:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: auto; 
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .back-button {
+        margin-top: 10px;
+    }
+
+    h1 {
+        text-align: center; 
+        margin-top: 10px; 
+    }
+}
+
+@media (max-width: 600px) {
+    .game {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center; 
+    }
+
+    .gameForm {
+        max-width: 100%;
+    }
+}

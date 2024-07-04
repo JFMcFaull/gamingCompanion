@@ -1,13 +1,11 @@
-/* General styles */
 body {
   font-family: "Press Start 2P", system-ui;
   font-size: 10px;
   background-color: black;
   color: white;
   padding: 20px;
-  margin: 0; /* Ensure no default margin */
+  margin: 0; 
 }
-
 
 .header {
   position: fixed;
@@ -17,71 +15,99 @@ body {
   height: 80px;
   z-index: 1000;
   display: flex;
-  justify-content: space-between; /* Space items evenly between header content */
-  align-items: center; /* Center content vertically */
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 20px solid transparent;
   box-sizing: border-box;
   padding: 0 20px;
   background-color: black;
 }
 
-.header-content {
-  display: flex;
-  flex-grow: 1; /* Allow flex items to grow */
-  justify-content: space-between; /* Space items evenly across the header content */
-  align-items: center; /* Center content vertically */
-}
-
-h1 {
-  text-align: center;
+.header h1 {
   font-weight: 400;
   font-style: normal;
-  margin: 0; /* Remove default margin */
+  margin: 0;
   font-family: "Press Start 2P", system-ui;
-  flex-grow: 1; /* Allow h1 to take remaining space */
+  flex-grow: 1;
 }
 
-#filterBox {
-  margin-left: 20px; /* Add space between filter box and back button */
-  margin-right: 20px; /* Add space between filter box and right edge */
+.startNewGame {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px; 
 }
 
-.back-button {
-  background-color: black; /* Green background */
-  color: white; /* White text */
-  padding: 10px 20px; /* Padding inside button */
-  text-align: center; /* Center text inside button */
-  text-decoration: none; /* Remove underline */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Cursor on hover */
+.startNewGame-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
   border-radius: 8px;
   box-shadow: 0 0 2px white;
   font-family: "Press Start 2P", system-ui;
+  margin-left: 20px; 
 }
 
-h1, h2, h3 {
-  text-align: center;
-  font-weight: 400;
-  font-style: normal;
-  margin: 0; /* Remove default margin */
-  font-family: "Press Start 2P", system-ui;
+.startNewGame-button:hover {
+  background-color: #4CAF50; 
+  color: white;
 }
 
-#gamesList {
-  max-width: 800px;
-  margin: 120px auto 20px; /* Adjust margin top to accommodate header height */
+
+.container {
+  margin-top: 100px; 
   padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: black;
   border-radius: 8px;
   box-shadow: 0 0 10px white;
+  display: flex;
+  flex-direction: column; 
+}
+
+.filterBox {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.filterBox label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.filterBox input[type="text"],
+.filterBox select {
+  width: 100%; 
+  padding: 8px;
+  border: 1px solid white; 
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box; 
+}
+
+.gamesList {
+  background-color: black;
 }
 
 .game {
-  margin-bottom: 20px;
+  margin-top: 20px;
   padding: 10px;
-  background-color: white;
+  background-color: black;
+  color: white;
   border-radius: 4px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px white;
+  width: 100%; 
+  box-sizing: border-box;
 }
 
 .game h3 {
@@ -90,7 +116,7 @@ h1, h2, h3 {
 }
 
 .game p {
-  color: #666;
+  color: white;
 }
 
 hr {
@@ -99,53 +125,51 @@ hr {
   margin: 10px 0;
 }
 
+a {
+  color: white; 
+  text-decoration: none; 
+}
 
-/* Responsive design */
+a:hover {
+  color: #4CAF50; 
+}
+
+.game img {
+  max-width: 100%;
+  height: 20px;
+  display: block;
+  margin-top: 10px; 
+  border-radius: 4px; 
+}
+
 @media (max-width: 768px) {
-  .game {
-      padding: 8px;
-  }
-
   .header {
-      height: auto; /* Allow header height to adjust based on content */
-      flex-direction: column; /* Stack items vertically */
-      align-items: flex-start; /* Align items to the start */
+      height: auto;
+      flex-direction: column;
+      align-items: flex-start;
   }
 
-  .back-button {
-      margin-top: 10px; /* Add space between back button and h1 */
+  .startNewGame {
+      flex-direction: column;
+      align-items: flex-start;
   }
 
-  h1 {
-      text-align: center; /* Align h1 to the center */
-      margin-top: 10px; /* Add space between h1 and filter box */
+  .startNewGame-button {
+      margin-top: 10px; 
+      margin-right: 0;
   }
 
-  #filterBox {
-    margin-left: auto; /* Push filter box to the right */
-    margin-right: 20px; /* Add some margin for spacing */
-}
-
-}
-
-.life-hearts {
-  width: auto; /* Adjust size as needed */
-  height: 25px; /* Set a fixed height */
-  margin-left: auto; /* Auto margin on the left */
-  margin-right: 0; /* No margin on the right */
-  align-self: center; /* Center vertically */
-}
-
-@media (max-width: 600px) {
-  .game {
-      flex-direction: column; /* Stack items vertically on smaller screens */
-      align-items: center; /* Center items horizontally in the column */
-      text-align: center; /* Center text within game column */
+  .header h1 {
+      text-align: center;
+      margin-top: 10px; 
   }
 
-  .life-hearts {
-      margin-left: auto; /* Auto margin on the left */
-      margin-right: auto; /* Auto margin on the right */
-      margin-top: 10px; /* Add top margin for separation */
+  .container {
+      padding: 10px;
+      margin-top: 80px; 
+  }
+
+  .filterBox {
+      margin-bottom: 10px; 
   }
 }

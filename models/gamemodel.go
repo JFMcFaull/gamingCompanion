@@ -13,4 +13,7 @@ type Game struct {
 	CompletedSideQuests   int
 	Collectibles          int
 	CollectedCollectibles int
+	CurrentlyPlaying      string
+	GameGuide             string
+	GameMap               string
 }

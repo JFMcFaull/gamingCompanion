@@ -14,51 +14,103 @@
 <body>
 
     <div id="header" class="header">
-        <a href="homepage.html" class="back-button">Back</a>
-        <h1>Start new Game...</h1>
+        <a href="gamesLibrary.html" class="back-button">Back</a>
         <div class="header-content">
         </div>
     </div>
 
     <div class="container">
         <h1>Create New Game</h1>
-        <form id="gameForm">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required><br><br>
+        <div id="gameFormContainer">
+            <form id="gameForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br><br>
 
-            <label for="franchise">Franchise:</label>
-            <input type="text" id="franchise" name="franchise" required><br><br>
+                <label for="franchise">Franchise:</label>
+                <input type="text" id="franchise" name="franchise" required><br><br>
 
-            <label for="platform">Platform:</label>
-            <input type="text" id="platform" name="platform" required><br><br>
+                <label for="platform">Platform:</label><p></p>
+                <select id="platform" name="platform" class="custom-select" required>
+                    <option value="">Select Platform</option>
+                    <optgroup label="Nintendo Consoles">
+                        <option value="Nintendo Entertainment System">Nintendo Entertainment System</option>
+                        <option value="Nintendo Gameboy">Nintendo Gameboy (including Classic, Pocket and Colour)</option>
+                        <option value="Super Nintendo Entertainment System">Super Nintendo Entertainment System</option>
+                        <option value="Nintendo Virtual Boy">Nintendo Virtual Boy</option>
+                        <option value="Nintendo 64">Nintendo 64</option>
+                        <option value="Nintendo Gameboy Advance">Nintendo Advance (including Original, SP and Micro)</option>
+                        <option value="Nintendo Gamecube">Nintendo Gamecube</option>
+                        <option value="Nintendo DS">Nintendo DS (including Original, Lite, DSi and DSi XL)</option>
+                        <option value="Nintendo Wii">Nintendo Wii</option>
+                        <option value="Nintendo 3DS">Nintendo 3DS (including Original, 3DS XL, 2DS, New Nintendo 3DS XL and New Nintendo 2DS Xl)</option>
+                        <option value="Nintendo Wii U">Nintendo Wii U</option>
+                        <option value="Nintendo Switch">Nintendo Switch</option>
+                    </optgroup>
+                    <optgroup label="Sega Consoles">
+                        <option value="Sega Master System">Sega Master System (including Master System II)</option>
+                        <option value="Sega Mega Drive">Sega Mega Drive (including Model 1, Model 2, Model 3)</option>
+                        <option value="Sega Game Gear">Sega Game Gear</option>
+                        <option value="Sega Mega-CD">Sega Mega-CD (including Model 1 and Model 2)</option>
+                        <option value="Sega 32X">Sega 32X</option>
+                        <option value="Sega Saturn">Sega Saturn</option>
+                        <option value="Sega Dreamcast">Sega Dreamcast</option>
+                        <option value="Sega Nomad">Sega Nomad</option>
+                        <option value="Sega Pico">Sega Pico</option>
+                    </optgroup>
+                    <optgroup label="PlayStation Consoles">
+                        <option value="PlayStation">PlayStation (PS1)</option>
+                        <option value="PlayStation 2">PlayStation 2 (PS2)</option>
+                        <option value="PlayStation Portable">PlayStation Portable (PSP)</option>
+                        <option value="PlayStation 3">PlayStation 3 (PS3)</option>
+                        <option value="PlayStation Vita">PlayStation Vita (PS Vita)</option>
+                        <option value="PlayStation 4">PlayStation 4 (PS4)</option>
+                        <option value="PlayStation 5">PlayStation 5 (PS5)</option>
+                    </optgroup>
+                    <optgroup label="Xbox Consoles">
+                        <option value="Xbox">Xbox (Original)</option>
+                        <option value="Xbox 360">Xbox 360 (including Core, Pro, Elite, Arcade, Slim, E)</option>
+                        <option value="Xbox One">Xbox One (including Original, S, X)</option>
+                        <option value="Xbox Series X|S">Xbox Series X|S (including Series X and Series S)</option>
+                    </optgroup>
+                </select><br><br>
 
-            <label for="mainQuests">Main Quests:</label>
-            <input type="number" id="mainQuests" name="mainQuests" required><br><br>
+                <label for="mainQuests">Main Quests:</label>
+                <input type="number" id="mainQuests" name="mainQuests" required><br><br>
 
-            <label for="sideQuests">Side Quests:</label>
-            <input type="number" id="sideQuests" name="sideQuests" required><br><br>
+                <label for="sideQuests">Side Quests:</label>
+                <input type="number" id="sideQuests" name="sideQuests" required><br><br>
 
-            <label for="completedMainQuests">Completed Main Quests:</label>
-            <input type="number" id="completedMainQuests" name="completedMainQuests" required><br><br>
+                <label for="completedMainQuests">Completed Main Quests:</label>
+                <input type="number" id="completedMainQuests" name="completedMainQuests" required><br><br>
 
-            <label for="completedSideQuests">Completed Side Quests:</label>
-            <input type="number" id="completedSideQuests" name="completedSideQuests" required><br><br>
+                <label for="completedSideQuests">Completed Side Quests:</label>
+                <input type="number" id="completedSideQuests" name="completedSideQuests" required><br><br>
 
-            <label for="collectibles">Collectibles:</label>
-            <input type="number" id="collectibles" name="collectibles" required><br><br>
+                <label for="collectibles">Collectibles:</label>
+                <input type="number" id="collectibles" name="collectibles" required><br><br>
 
-            <label for="collectedCollectibles">Collected Collectibles:</label>
-            <input type="number" id="collectedCollectibles" name="collectedCollectibles" required><br><br>
+                <label for="collectedCollectibles">Collected Collectibles:</label>
+                <input type="number" id="collectedCollectibles" name="collectedCollectibles" required><br><br>
 
-            <button type="button" id="submitButton">Create Game</button>
-        </form>
+                <label for="currentlyPlaying">Status:</label><p></p>
+                    <select id="currentlyPlaying" name="currentlyPlaying" class="custom-select" required>
+                        <option value="Currently Playing">Currently Playing</option>
+                        <option value="Paused">Paused</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Not Started">Not Started</option>
+                    </select><p></p>
+                
+                <button type="button" id="submitButton">Create Game</button>
+            </form>
+
+            
+        </div>
     </div>
 
     <!-- Confirmation popup overlay -->
     <div class="overlay" id="overlay">
         <div class="popup">
             <h2>Are you sure you want to start a new game?</h2>
-            <p>This action cannot be undone.</p>
             <button id="confirmYes">Yes</button>
             <button id="confirmNo">No</button>
         </div>
@@ -98,58 +150,59 @@
 
         // Event listener for Yes button in confirmation popup
         confirmYes.addEventListener('click', async () => {
-            hideConfirmationPopup();
+        hideConfirmationPopup();
 
-            // Process form submission
-            const formData = new FormData(form);
-            const title = formData.get('title');
-            const franchise = formData.get('franchise');
-            const platform = formData.get('platform');
-            const mainQuests = parseInt(formData.get('mainQuests'));
-            const sideQuests = parseInt(formData.get('sideQuests'));
-            const completedMainQuests = parseInt(formData.get('completedMainQuests'));
-            const completedSideQuests = parseInt(formData.get('completedSideQuests'));
-            const collectibles = parseInt(formData.get('collectibles'));
-            const collectedCollectibles = parseInt(formData.get('collectedCollectibles'));
+        // Process form submission
+        const formData = new FormData(form);
+        const title = formData.get('title');
+        const franchise = formData.get('franchise');
+        const platform = formData.get('platform');
+        const mainQuests = parseInt(formData.get('mainQuests'));
+        const sideQuests = parseInt(formData.get('sideQuests'));
+        const completedMainQuests = parseInt(formData.get('completedMainQuests'));
+        const completedSideQuests = parseInt(formData.get('completedSideQuests'));
+        const collectibles = parseInt(formData.get('collectibles'));
+        const collectedCollectibles = parseInt(formData.get('collectedCollectibles'));
+        const currentlyPlaying = formData.get('currentlyPlaying'); // Directly get string value
 
-            try {
-                const response = await fetch('http://localhost:3000/games', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        title,
-                        franchise,
-                        platform,
-                        mainQuests,
-                        sideQuests,
-                        completedMainQuests,
-                        completedSideQuests,
-                        collectibles,
-                        collectedCollectibles
-                    })
-                });
+        try {
+            const response = await fetch('http://localhost:8080/games', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    franchise,
+                    platform,
+                    mainQuests,
+                    sideQuests,
+                    completedMainQuests,
+                    completedSideQuests,
+                    collectibles,
+                    collectedCollectibles,
+                    currentlyPlaying,
+                })
+            });
 
-                if (!response.ok) {
-                    throw new Error('Failed to create game');
-                }
-
-                alert('Game created successfully');
-                form.reset(); // Clear form fields
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to create game');
+            if (!response.ok) {
+                throw new Error('Failed to create game');
             }
-        });
 
-        // Event listener for No button in confirmation popup
-        confirmNo.addEventListener('click', () => {
-            hideConfirmationPopup();
-        });
+            alert('Game created successfully');
+            form.reset(); // Clear form fields
+
+            // Redirect to gamesLibrary.html
+            window.location.href = 'gamesLibrary.html';
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to create game');
+        }
+    });
+
+
     </script>
-
-
-    
 </body>
+
 </html>
